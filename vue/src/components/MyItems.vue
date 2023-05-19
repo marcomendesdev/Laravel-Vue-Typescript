@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">All items</h2>
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900">My items</h2>
 
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div
@@ -22,14 +22,13 @@
               <button class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2">
                 Edit
               </button>
-              <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
+              <button @click.prevent="clicks" class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
                 Delete
               </button>
             </div>
           <div class="mt-4 flex justify-between px-2 py-2">
             <div>
               <h3 class="text-sm text-gray-700">
-                <span aria-hidden="true" class="absolute inset-0" />
                 {{ product.name }}
               </h3>
             </div>
@@ -53,9 +52,10 @@ interface Product {
   price: number
 }
 
-const click = () => {
-  console.log('click')
+const clicks = () => {
+  console.log('clicks')
 }
+
 
 const products = ref<Product[]>([])
 const appStore = useAppStore()
@@ -65,4 +65,11 @@ onMounted(async () => {
   products.value = response.data
   console.log('data', response.data.id)
 })
+
+// onUnmounted(() => {
+//   // Emit the 'vnode-unmounted' event
+//   if (typeof emit === 'function') {
+//     emit('vnode-unmounted')
+//   }})
+
 </script>
