@@ -4,23 +4,34 @@
       <h2 class="text-2xl font-bold tracking-tight text-gray-900">All items</h2>
 
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        <div v-for="product in products" :key="product.id" class="group relative">
+        <div
+          v-for="product in products"
+          :key="product.id"
+          class="group relative rounded-lg shadow-2xl"
+        >
           <div
-            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 shadow-lg lg:aspect-none group-hover:opacity-75 lg:h-80"
+            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-60"
           >
             <img
               :src="product.image_path"
               alt="any"
-              class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+              class="lg:h-50 h-full w-full object-cover object-center lg:w-full"
             />
           </div>
-          <div class="mt-4 flex justify-between">
+          <div class="flex-row flex">
+              <button class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2">
+                Edit
+              </button>
+              <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
+                Delete
+              </button>
+            </div>
+          <div class="mt-4 flex justify-between px-2 py-2">
             <div>
               <h3 class="text-sm text-gray-700">
                 <span aria-hidden="true" class="absolute inset-0" />
                 {{ product.name }}
               </h3>
-              <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
             </div>
             <p class="text-sm font-medium text-gray-900">{{ product.price }}</p>
           </div>
@@ -31,18 +42,27 @@
 </template>
 
 <script setup lang="ts">
-import axiosApi from '@/axiosApi';
-import { ref, onMounted } from 'vue';
-import { useAppStore } from '@/stores/appStore';
+import axiosApi from '@/axiosApi'
+import { ref, onMounted } from 'vue'
+import { useAppStore } from '@/stores/appStore'
 
-const products = ref([]);
-const appStore = useAppStore();
+interface Product {
+  id: number
+  name: string
+  image_path: string // Add the 'image_path' property with the correct type
+  price: number
+}
+
+const click = () => {
+  console.log('click')
+}
+
+const products = ref<Product[]>([])
+const appStore = useAppStore()
 
 onMounted(async () => {
-  const response = await axiosApi.get(`/user-products/${appStore.id}`);
-  products.value = response.data;
-  console.log('data', response.data.id);
-});
+  const response = await axiosApi.get(`/user-products/${appStore.id}`)
+  products.value = response.data
+  console.log('data', response.data.id)
+})
 </script>
-
-

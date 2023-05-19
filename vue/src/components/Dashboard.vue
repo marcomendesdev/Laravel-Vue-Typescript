@@ -175,7 +175,6 @@ import { RouterLink } from 'vue-router'
 import { useAppStore } from '@/stores/appStore'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
-import axiosApi from '@/axiosApi'
 
 const appStore = useAppStore()
 const router = useRouter()
