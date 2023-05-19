@@ -69,6 +69,7 @@
                           v-slot="{ active }"
                         >
                           <a
+                          @click.prevent="item.click"
                             :to="item.to"
                             :class="[
                               active ? 'bg-gray-100' : '',
@@ -133,6 +134,7 @@
                   v-for="item in userNavigation"
                   :key="item.name"
                   as="a"
+                  @click.prevent="item.click"
                   :to="item.to"
                   class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >{{ item.name }}</DisclosureButton
@@ -170,6 +172,11 @@ import {
 } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
+import { useAppStore } from '@/stores/appStore';
+import { useRouter } from 'vue-router';
+
+const appStore = useAppStore()
+const router = useRouter()
 
 const user = {
   name: 'Tom Cook',
@@ -183,9 +190,16 @@ const navigation = [
   { name: 'Edit items', to: { name: 'Update' } },
   { name: 'Add item', to: { name: 'AddNew' } }
 ]
+
+function logout () {
+  appStore.logoutUser().then(() => {
+    router.push({ name: 'Login' })
+  })
+}
+
 const userNavigation = [
   { name: 'Your Profile', to: '#' },
   { name: 'Settings', to: '#' },
-  { name: 'Sign out', to: '#' }
+  { name: 'Sign out', click: logout}
 ]
 </script>

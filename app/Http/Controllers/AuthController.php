@@ -23,13 +23,13 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken')->plainTextToken;
 
-        return response(['user' => $user, 'access_token' => $token]);
+        return response(['user' => $user, 'token' => $token]);
     }
 
     public function login(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'exists:users,email'],
             'password' => ['required', 'string'],
         ]);
         if (!Auth::attempt($validatedData)) {
