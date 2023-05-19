@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <html class="h-screen bg-gray-300">
+  <html class="h-full bg-gray-300">
     <body class="h-full">
       <div class="min-h-full">
         <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
@@ -69,7 +69,7 @@
                           v-slot="{ active }"
                         >
                           <a
-                          @click.prevent="item.click"
+                            @click.prevent="item.click"
                             :to="item.to"
                             :class="[
                               active ? 'bg-gray-100' : '',
@@ -172,8 +172,10 @@ import {
 } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
-import { useAppStore } from '@/stores/appStore';
-import { useRouter } from 'vue-router';
+import { useAppStore } from '@/stores/appStore'
+import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import axiosApi from '@/axiosApi'
 
 const appStore = useAppStore()
 const router = useRouter()
@@ -191,7 +193,7 @@ const navigation = [
   { name: 'Add item', to: { name: 'AddNew' } }
 ]
 
-function logout () {
+function logout() {
   appStore.logoutUser().then(() => {
     router.push({ name: 'Login' })
   })
@@ -200,6 +202,15 @@ function logout () {
 const userNavigation = [
   { name: 'Your Profile', to: '#' },
   { name: 'Settings', to: '#' },
-  { name: 'Sign out', click: logout}
+  { name: 'Sign out', click: logout }
 ]
+
+const setId = () => {
+  appStore.setUserId()
+}
+
+onMounted(() => {
+  setId()
+  router.push({ name: 'AllItems' })
+});
 </script>
