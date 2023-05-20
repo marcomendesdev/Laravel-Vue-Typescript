@@ -34,12 +34,19 @@
 import axiosApi from '@/axiosApi';
 import { ref, onMounted } from 'vue';
 
-const products = ref([]);
+const products = ref<Product[]>([]);
+
+interface Product {
+  id: number;
+  name: string;
+  image_path: string;
+  price: number;
+  color: string;
+}
 
 onMounted(async () => {
-  const { data } = await axiosApi.get('/all-products');
+  const { data } = await axiosApi.get<Product[]>('/all-products');
   products.value = data;
-  console.log('data', data);
-  
+  console.log('data', data); 
 });
 </script>

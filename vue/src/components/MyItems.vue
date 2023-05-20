@@ -10,19 +10,19 @@
           class="group relative rounded-lg shadow-2xl"
         >
           <div
-            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-60"
+            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-t-lg lg:aspect-none group-hover:opacity-75 lg:h-60"
           >
             <img
               :src="product.image_path"
               alt="any"
               class="lg:h-50 h-full w-full object-cover object-center lg:w-full"
-            />
+            /> 
           </div>
           <div class="flex-row flex">
-              <button class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2">
+              <button @click.prevent="clicks(product.id)" class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2">
                 Edit
               </button>
-              <button @click.prevent="clicks" class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
+              <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
                 Delete
               </button>
             </div>
@@ -38,12 +38,14 @@
       </div>
     </div>
   </div>
+  <OverLay :show="show" />
 </template>
 
 <script setup lang="ts">
 import axiosApi from '@/axiosApi'
 import { ref, onMounted } from 'vue'
 import { useAppStore } from '@/stores/appStore'
+import OverLay from '@/components/OverLay.vue'
 
 interface Product {
   id: number
@@ -52,24 +54,22 @@ interface Product {
   price: number
 }
 
-const clicks = () => {
-  console.log('clicks')
-}
+const show = ref(false)
+const ids = ref(0)
 
+const clicks = (id: number) => {
+  show.value = !show.value 
+ids.value = id
+console.log('id', id);
+
+}
 
 const products = ref<Product[]>([])
 const appStore = useAppStore()
 
 onMounted(async () => {
-  const response = await axiosApi.get(`/user-products/${appStore.id}`)
-  products.value = response.data
-  console.log('data', response.data.id)
+  const {data} = await axiosApi.get(`/user-products/${appStore.id}`)
+  products.value = data
+  console.log('data', data)
 })
-
-// onUnmounted(() => {
-//   // Emit the 'vnode-unmounted' event
-//   if (typeof emit === 'function') {
-//     emit('vnode-unmounted')
-//   }})
-
 </script>

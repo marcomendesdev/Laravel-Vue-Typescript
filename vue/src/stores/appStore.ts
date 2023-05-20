@@ -1,7 +1,6 @@
 import axiosApi from '@/axiosApi'
 import { defineStore } from 'pinia'
 
-
 export const useAppStore = defineStore('app', {
   state: () => ({
     user: {
