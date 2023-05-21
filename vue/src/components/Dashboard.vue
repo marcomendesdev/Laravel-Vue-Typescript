@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <html class="h-full bg-gray-300">
-    <body class="h-full">
+  
       <div class="min-h-full">
         <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -156,8 +155,7 @@
           </div>
         </main>
       </div>
-    </body>
-  </html>
+   
 </template>
 
 <script setup lang="ts">

@@ -25,7 +25,12 @@
             >
               Edit
             </button>
-            <button @click="deleteItem(product.id)" class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">Delete</button>
+            <button
+              @click="deleteItem(product.id)"
+              class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2"
+            >
+              Delete
+            </button>
           </div>
           <div class="mt-4 flex justify-between px-2 py-2">
             <div>
