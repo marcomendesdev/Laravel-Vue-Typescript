@@ -16,16 +16,17 @@
               :src="product.image_path"
               alt="any"
               class="lg:h-50 h-full w-full object-cover object-center lg:w-full"
-            /> 
+            />
           </div>
-          <div class="flex-row flex">
-              <button @click.prevent="clicks(product.id)" class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2">
-                Edit
-              </button>
-              <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">
-                Delete
-              </button>
-            </div>
+          <div class="flex flex-row">
+            <button
+              @click.prevent="clicks(product.id)"
+              class="m-2 w-full rounded-sm bg-blue-600 p-2 text-white sm:w-1/2"
+            >
+              Edit
+            </button>
+            <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">Delete</button>
+          </div>
           <div class="mt-4 flex justify-between px-2 py-2">
             <div>
               <h3 class="text-sm text-gray-700">
@@ -55,20 +56,19 @@ interface Product {
 }
 
 const show = ref(false)
-const ids = ref(0)
+const id = ref(0)
 
-const clicks = (id: number) => {
-  show.value = !show.value 
-ids.value = id
-console.log('id', id);
-
+const clicks = (ids: number) => {
+  show.value = !show.value
+  id.value = ids
+  console.log('id', ids)
 }
 
 const products = ref<Product[]>([])
 const appStore = useAppStore()
 
 onMounted(async () => {
-  const {data} = await axiosApi.get(`/user-products/${appStore.id}`)
+  const { data } = await axiosApi.get(`/user-products/${appStore.id}`)
   products.value = data
   console.log('data', data)
 })
