@@ -1,16 +1,15 @@
 <template>
-  <html class="h-full bg-gray-300">
-    <body class="h-full">
   <RouterView />
-    </body>
-  </html>
 </template>
 
-
 <style>
-html, body {
+html,
+body {
   height: 100%;
   opacity: 1;
+}
+
+html {
   background-color: rgb(209 213 219);
 }
 </style>
