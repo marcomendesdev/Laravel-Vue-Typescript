@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <OverLay :show="show" />
+  <OverLay :show="show" :id="id" />
 </template>
 
 <script setup lang="ts">

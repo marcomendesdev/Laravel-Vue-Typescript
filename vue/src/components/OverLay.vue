@@ -87,7 +87,8 @@ import { ref, toRefs, watch } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 const props = defineProps({
-  show: Boolean
+  show: Boolean,
+  id: Number
 })
 const { show } = toRefs(props)
 const open = ref(false)
