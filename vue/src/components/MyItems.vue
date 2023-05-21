@@ -25,7 +25,7 @@
             >
               Edit
             </button>
-            <button class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">Delete</button>
+            <button @click="deleteItem(product.id)" class="m-2 w-full rounded-sm bg-red-600 p-2 text-white sm:w-1/2">Delete</button>
           </div>
           <div class="mt-4 flex justify-between px-2 py-2">
             <div>
@@ -47,6 +47,7 @@ import axiosApi from '@/axiosApi'
 import { ref, onMounted } from 'vue'
 import { useAppStore } from '@/stores/appStore'
 import OverLay from '@/components/OverLay.vue'
+import { useRouter } from 'vue-router'
 
 interface Product {
   id: number
@@ -54,6 +55,8 @@ interface Product {
   image_path: string // Add the 'image_path' property with the correct type
   price: number
 }
+
+const router = useRouter()
 
 const show = ref(false)
 const id = ref(0)
@@ -66,6 +69,12 @@ const clicks = (ids: number) => {
 
 const products = ref<Product[]>([])
 const appStore = useAppStore()
+
+const deleteItem = async (id: Number) => {
+  const { data } = await axiosApi.delete(`/delete-product/${id}`)
+  console.log('data', data)
+  router.push('/all-items')
+}
 
 onMounted(async () => {
   const { data } = await axiosApi.get(`/user-products/${appStore.id}`)

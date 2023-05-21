@@ -6,7 +6,7 @@
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="product in products" :key="product.id" class="group relative">
           <div
-            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 shadow-lg"
+            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 shadow-lg lg:aspect-none group-hover:opacity-75 lg:h-80"
           >
             <img
               :src="product.image_path"
@@ -17,8 +17,8 @@
           <div class="mt-4 flex justify-between">
             <div>
               <h3 class="text-sm text-gray-700">
-                  <span aria-hidden="true" class="absolute inset-0" />
-                  {{ product.name }}
+                <span aria-hidden="true" class="absolute inset-0" />
+                {{ product.name }}
               </h3>
               <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
             </div>
@@ -31,22 +31,22 @@
 </template>
 
 <script setup lang="ts">
-import axiosApi from '@/axiosApi';
-import { ref, onMounted } from 'vue';
+import axiosApi from '@/axiosApi'
+import { ref, onMounted } from 'vue'
 
-const products = ref<Product[]>([]);
+const products = ref<Product[]>([])
 
 interface Product {
-  id: number;
-  name: string;
-  image_path: string;
-  price: number;
-  color: string;
+  id: number
+  name: string
+  image_path: string
+  price: number
+  color: string
 }
 
 onMounted(async () => {
-  const { data } = await axiosApi.get<Product[]>('/all-products');
-  products.value = data;
-  console.log('data', data); 
-});
+  const { data } = await axiosApi.get<Product[]>('/all-products')
+  products.value = data
+  console.log('data', data)
+})
 </script>

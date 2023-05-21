@@ -40,12 +40,13 @@
                 Edit item
               </h2>
 
-              <form class="mt-10 space-y-6" action="#" method="POST">
+              <form class="mt-10 space-y-6" @submit.prevent="update">
                 <div class="mt-2">
                   <input
+                  v-model="name"
                     id="name"
                     name="name"
-                    type="email"
+                    type="text"
                     autocomplete="name"
                     placeholder="Full name"
                     required
@@ -55,6 +56,7 @@
 
                 <div class="mt-2">
                   <input
+                  v-model="price"
                     id="price"
                     name="price"
                     type="number"
@@ -65,12 +67,25 @@
                   />
                 </div>
 
+                <div class="mt-2">
+                  <input
+                  v-model="image_path"
+                    id="image"
+                    name="image"
+                    type="url"
+                    autocomplete="image"
+                    placeholder="Image"
+                    required
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+
                 <div>
                   <button
                     type="submit"
                     class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   >
-                    Sign in
+                    Submit
                   </button>
                 </div>
               </form>
@@ -85,6 +100,13 @@
 <script setup lang="ts">
 import { ref, toRefs, watch } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import axiosApi from '@/axiosApi'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const name = ref('')
+const price = ref(Number)
+const image_path = ref('')
 
 const props = defineProps({
   show: Boolean,
@@ -95,5 +117,18 @@ const open = ref(false)
 
 watch(show, () => {
   open.value = !open.value
+  console.log('ids', props.id);
+  
 })
+
+const update = async () => {
+  const { data } = await axiosApi.put(`/update-product/${props.id}`, {
+    name: name.value,
+    price: price.value,
+    image_path: image_path.value
+  })
+  console.log('data', data);
+  open.value = false
+  router.push({ name: 'AllItems'})
+}
 </script>

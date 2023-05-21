@@ -171,9 +171,8 @@ import {
   MenuItems
 } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAppStore } from '@/stores/appStore'
-import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 
 const appStore = useAppStore()
@@ -188,7 +187,6 @@ const user = {
 const navigation = [
   { name: 'All items', to: { name: 'AllItems' } },
   { name: 'My items', to: { name: 'MyItems' } },
-  { name: 'Edit items', to: { name: 'Update' } },
   { name: 'Add item', to: { name: 'AddNew' } }
 ]
 

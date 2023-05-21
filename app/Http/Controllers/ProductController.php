@@ -53,7 +53,7 @@ class ProductController extends Controller
             'name' => ['string'],
             'description' => ['string'],
             'price' => ['numeric'],
-            'image' => ['string'],
+            'image_path' => ['string'],
         ]);
 
         $user = Auth::user();
